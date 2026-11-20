@@ -6,7 +6,7 @@
 /*   By: kpuythor <kevin.puythorac@learner.42.te    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 16:50:28 by kpuythor          #+#    #+#             */
-/*   Updated: 2026/11/20 14:51:52 by kpuythor         ###   ########.fr       */
+/*   Updated: 2026/11/20 16:14:09 by kpuythor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,15 @@ static int	ft_format(char c, va_list *args)
 		count = ft_print_nbr(va_arg(*args, int));
 	if (c == 'u')
 		count = ft_print_unsigned_nbr(va_arg(*args, unsigned int));
-	if (c == 'x' || 'p')
-		count = ft_print_hexa(va_arg(*args, unsigned long), "0123456789abcdef", c);
+	if (c == 'x')
+		count = ft_print_hexa(va_arg(*args, unsigned int), \
+"0123456789abcdef", c);
 	if (c == 'X')
-		count = ft_print_hexa(va_arg(*args, unsigned long), "0123456789ABCDEF", c);
+		count = ft_print_hexa(va_arg(*args, unsigned int), \
+"0123456789ABCDEF", c);
+	if (c == 'p')
+		count = ft_print_hexa((unsigned long)va_arg(*args, void *), \
+"0123456789abcdef", c);
 	if (c == '%')
 		count = ft_print_char(c);
 	return (count);
@@ -36,27 +41,27 @@ static int	ft_format(char c, va_list *args)
 
 int	ft_printf(const char *str, ...)
 {
-	if (!str)
-		return (-1);
-	int	i;
-	int	count;
+	int		i;
+	int		count;
 	va_list	args;
 
+	if (!str)
+		return (-1);
 	i = 0;
 	count = 0;
 	va_start(args, str);
 	while (str[i])
 	{
-			if (str[i] == '%' && str[i + 1])
+		if (str[i] == '%' && str[i + 1])
 		{
 			count += ft_format(str[i + 1], &args);
-			 i += 2;
+			i += 2;
 		}
 		else
 		{
-		ft_putchar_fd(str[i], 1);
-		i++;
-		count++;
+			ft_putchar_fd(str[i], 1);
+			i++;
+			count++;
 		}
 	}
 	va_end(args);

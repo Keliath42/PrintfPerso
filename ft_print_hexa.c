@@ -6,7 +6,7 @@
 /*   By: kpuythor <kevin.puythorac@learner.42.te    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/20 13:36:18 by kpuythor          #+#    #+#             */
-/*   Updated: 2026/11/20 14:44:58 by kpuythor         ###   ########.fr       */
+/*   Updated: 2026/11/20 16:16:01 by kpuythor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ft_print_hexa(unsigned long n, char *base, char c)
 	if (c == 'p' && n != 0)
 		i += ft_print_str("0x");
 	else if (c == 'p' && n == 0)
-			return (i = ft_print_str("(nil)"));
+		return (i = ft_print_str("(nil)"));
 	i += len_nb_hexa(n);
 	ft_put_hexa_nbr_fd(n, 1, base);
 	return (i);
