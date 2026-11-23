@@ -8,34 +8,30 @@ NAME				:= libftprintf.a
 ##############################################################
 ## SOURCES
 
-SRC					:= ft_printf.c ft_print_char.c ft_print_str.c ft_print_nbr.c ft_print_unsigned_nbr.c ft_print_hexa.c
-OBJ					:= $(SRC:.c=.o)
-LIBFT				:= Libft/libft.a
+SRC						:= ft_printf.c ft_print_char.c ft_print_str.c ft_print_nbr.c ft_print_unsigned_nbr.c ft_print_hexa.c
+OBJ						:= $(SRC:.c=.o)
+LIBFT_SRC				:= Libft/ft_putchar_fd.c Libft/ft_putnbr_fd.c Libft/ft_strlen.c
+LIBFT_OBJ				:=$(LIBFT_SRC:.c=.o)
 
 ##############################################################
 ## RULES
 
 
-all: check_libft
-	$(MAKE) $(NAME)
+all: $(NAME)
 
-$(NAME) : $(OBJ) $(LIBFT)
-	$(AR) $@ $(OBJ) Libft/*.o
+$(NAME) : $(OBJ) $(LIBFT_OBJ)
+	$(AR) $@ $(OBJ) $(LIBFT_OBJ)
 
 %.o:%.c ft_printf.h Libft/libft.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-.PHONY: all clean fclean re check_libft
+.PHONY: all clean fclean re
 
 clean:
-	rm -f $(OBJ)
-	$(MAKE) clean -C Libft
+	rm -f $(OBJ) $(LIBFT_OBJ)
 
 fclean: clean
-	rm -f $(NAME) $(LIBFT)
+	rm -f $(NAME)
 
 re: fclean
 	$(MAKE) all
-
-check_libft: Libft/
-	$(MAKE) -C Libft
